@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>our universe ✨</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+  color:white;
+  background:black;
+}
+
+/* Animated Galaxy Background */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top left,#7e22ce,transparent 35%),
+    radial-gradient(circle at bottom right,#ec4899,transparent 35%),
+    radial-gradient(circle at center,#312e81,black 70%);
+  z-index:-3;
+}
+
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  z-index:-2;
+}
+
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  border-radius:50%;
+  animation: twinkle 4s infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:.2;}
+  to{opacity:1;}
+}
+
+/* Floating particles */
+.particle{
+  position:fixed;
+  bottom:-20px;
+  color:white;
+  opacity:.7;
+  animation: floatUp linear infinite;
+  z-index:-1;
+}
+
+@keyframes floatUp{
+  from{
+    transform:translateY(0);
+    opacity:0;
+  }
+  20%{
+    opacity:1;
+  }
+  to{
+    transform:translateY(-120vh);
+    opacity:0;
+  }
+}
+
+/* Hero */
+.hero{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+.hero-card{
+  width:90%;
+  max-width:800px;
+  padding:40px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 60px rgba(168,85,247,.35);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero h1{
+  font-size:58px;
+  margin-bottom:10px;
+  background:linear-gradient(to right,#fff,#f9a8d4);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  color:#e9d5ff;
+  font-size:18px;
+  line-height:1.7;
+}
+
+.stitch{
+  width:170px;
+  animation:floaty 4s ease-in-out infinite;
+  margin-bottom:20px;
+}
+
+@keyframes floaty{
+  0%{transform:translateY(0px);}
+  50%{transform:translateY(-12px);}
+  100%{transform:translateY(0px);}
+}
+
+/* Lightsaber glow */
+.glow-left{
+  position:absolute;
+  left:-120px;
+  top:50%;
+  width:240px;
+  height:4px;
+  background:#60a5fa;
+  transform:rotate(25deg);
+  box-shadow:
+    0 0 10px #60a5fa,
+    0 0 25px #60a5fa,
+    0 0 50px #60a5fa;
+}
+
+.glow-right{
+  position:absolute;
+  right:-120px;
+  top:30%;
+  width:240px;
+  height:4px;
+  background:#f472b6;
+  transform:rotate(-25deg);
+  box-shadow:
+    0 0 10px #f472b6,
+    0 0 25px #f472b6,
+    0 0 50px #f472b6;
+}
+
+/* Sections */
+.section{
+  padding:100px 20px;
+}
+
+.section-title{
+  text-align:center;
+  font-size:42px;
+  margin-bottom:50px;
+}
+
+.memory-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:30px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.memory-card{
+  background:rgba(255,255,255,0.08);
+  border-radius:25px;
+  overflow:hidden;
+  backdrop-filter:blur(14px);
+  transition:.35s;
+  box-shadow:0 0 25px rgba(255,255,255,.08);
+}
+
+.memory-card:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 0 35px rgba(192,132,252,.45);
+}
+
+.memory-card img{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+}
+
+.memory-content{
+  padding:22px;
+}
+
+.memory-content h3{
+  margin-bottom:10px;
+  font-size:22px;
+}
+
+.memory-content p{
+  color:#e9d5ff;
+  line-height:1.6;
+}
+
+/* Footer */
+.footer{
+  text-align:center;
+  padding:120px 20px;
+}
+
+.footer h2{
+  font-size:42px;
+  margin-bottom:20px;
+}
+
+.footer p{
+  color:#ddd6fe;
+  font-size:18px;
+  line-height:1.8;
+}
+
+/* Music Button */
+.music-btn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:none;
+  background:rgba(255,255,255,.12);
+  color:white;
+  backdrop-filter:blur(10px);
+  cursor:pointer;
+  font-size:22px;
+  box-shadow:0 0 20px rgba(255,255,255,.2);
+  z-index:999;
+}
+
+.music-btn:hover{
+  transform:scale(1.08);
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<script>
+for(let i=0;i<120;i++){
+  const star=document.createElement("div");
+  star.classList.add("star");
+  star.style.left=Math.random()*100+"vw";
+  star.style.top=Math.random()*100+"vh";
+  star.style.animationDelay=Math.random()*4+"s";
+  document.getElementById("stars").appendChild(star);
+}
+
+setInterval(()=>{
+  const p=document.createElement("div");
+  p.classList.add("particle");
+
+  const icons=["✨","💫","⭐","💜"];
+
+  p.innerHTML=icons[Math.floor(Math.random()*icons.length)];
+
+  p.style.left=Math.random()*100+"vw";
+  p.style.fontSize=(Math.random()*14+12)+"px";
+  p.style.animationDuration=(Math.random()*6+6)+"s";
+
+  document.body.appendChild(p);
+
+  setTimeout(()=>p.remove(),12000);
+
+},500);
+</script>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-card">
+
+    <div class="glow-left"></div>
+    <div class="glow-right"></div>
+
+    <img src="stitch.png" class="stitch">
+
+    <h1>our universe ✨</h1>
+
+    <p>
+      every memory with you becomes part of my galaxy 💜
+      <br><br>
+      somehow two completely different worlds found each other
+    </p>
+
+  </div>
+</section>
+
+<!-- First Date -->
+<section class="section">
+  <h2 class="section-title">🌌 a galaxy far far away...</h2>
+
+  <div class="memory-grid">
+
+    <div class="memory-card">
+      <img src="date1.jpg">
+
+      <div class="memory-content">
+        <h3>our first date</h3>
+        <p>
+          i was honestly nervous the entire time, holy yap 😭
+        </p>
+      </div>
+    </div>
+
+    <div class="memory-card">
+      <img src="date2.jpg">
+
+      <div class="memory-content">
+        <h3>art sessions 🎨</h3>
+        <p>
+          we cooked here
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Stitch Section -->
+<section class="section">
+  <h2 class="section-title">🛸 experiment 626 memories</h2>
+
+  <div class="memory-grid">
+
+    <div class="memory-card">
+      <img src="cute1.gif">
+
+      <div class="memory-content">
+        <h3>favorite moments</h3>
+        <p>
+          Lowkey a draw at the arcade, equally cooked 😂
+        </p>
+      </div>
+    </div>
+
+    <div class="memory-card">
+      <img src="cute2.jpg">
+
+      <div class="memory-content">
+        <h3>matching energy</h3>
+        <p>
+          still one of our favorite dates despite yk u passing out LMFAO
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="section">
+  <h2 class="section-title">⭐ star logs</h2>
+
+  <div class="memory-grid">
+
+    <div class="memory-card">
+      <img src="memory1.jpg">
+
+      <div class="memory-content">
+        <h3>adventures</h3>
+        <p>
+          every little moment with you becomes special somehow
+        </p>
+      </div>
+    </div>
+
+    <div class="memory-card">
+      <img src="memory2.jpg">
+
+      <div class="memory-content">
+        <h3>across the universe</h3>
+        <p>
+          thank you for making life feel softer
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Ending -->
+<section class="footer">
+
+  <h2>💫</h2>
+
+  <p>
+    out of everything in the universe,
+    <br>
+    somehow i found you 💜
+  </p>
+
+</section>
+
+<!-- Music -->
+<audio id="music" loop preload="auto">
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">
+  🎵
+</button>
+
+<script>
+const music = document.getElementById("music");
+
+/* autoplay after first interaction */
+document.body.addEventListener("click", () => {
+
+  if (music.paused) {
+
+    music.volume = 0.4;
+
+    const playPromise = music.play();
+
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+  }
+
+}, { once: true });
+
+function toggleMusic() {
+
+  if (music.paused) {
+    music.play();
+  } else {
+    music.pause();
+  }
+
+}
+</script>
+
+</body>
+</html>
